@@ -1,0 +1,40 @@
+version: '3'
+services:
+  container_front:
+    image: frontend-image
+    ports:
+      - "3000:3000"
+    networks:
+      - mynetwork
+    depends_on:
+      - container_back
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://container_back:8000" ]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+    environment:
+      - REACT_APP_BASE_URL=http://localhost:8000
+
+  container_back:
+    image: backend-image
+    ports:
+      - "8000:8000"
+    networks:
+      - mynetwork
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - MONGO_URL= mongodb+srv://dck150303:123@cluster0.xrfumnk.mongodb.net/
+      - PORT=8000
+
+  mongodb_db:
+    networks:
+      - mynetwork
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+
+networks:
+  mynetwork:
+    
