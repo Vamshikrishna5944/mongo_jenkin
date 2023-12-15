@@ -1,7 +1,7 @@
 version: '3'
 services:
   container_front:
-    image: frontend-image
+    image: vamshi07/frontend:latest
     ports:
       - "3000:3000"
     networks:
@@ -17,7 +17,7 @@ services:
       - REACT_APP_BASE_URL=http://localhost:8000
 
   container_back:
-    image: backend-image
+    image: vamshi07/backend:latest
     ports:
       - "8000:8000"
     networks:
